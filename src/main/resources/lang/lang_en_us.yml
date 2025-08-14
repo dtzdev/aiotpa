@@ -1,0 +1,81 @@
+# Commands
+command:
+  only-players-can-use-command: "Only players can use this command." # Sent to Console
+  no-permission: "§cYou do not have permission to use this command."
+  tpa:
+    usage: "§cUsage: /{command} <player>" #{command}
+    player-not-found: "§cPlayer {player} not found." #{player}
+    cannot-tpa-self: "§cYou cannot teleport to yourself."
+  tplist:
+    header: "§e--- TPA Requests ---"
+    incoming-header: "§7Incoming:"
+    incoming-entry: " §f{player} §7({type})" #{player},{type}
+    outgoing-header: "§7Outgoing:"
+    outgoing-entry: " §f{player} §7({type})" #{player},{type}
+    type-here: "Here"
+    type-to-you: "ToYou"
+    type-to-them: "ToThem"
+  tpsettings:
+    gui-title: "§8TPA Settings"
+    cooldown-message: "§cPlease wait before changing another setting."
+    toggle-tpa:
+      name: "§aToggle TPA Requests"
+      lore-current-enabled: "§7Currently: §aEnabled"
+      lore-current-disabled: "§7Currently: §cDisabled"
+      lore-click: "§eClick to change"
+      chat-enabled: "§aTPA Requests enabled."
+      chat-disabled: "§aTPA Requests disabled."
+    auto-accept:
+      name: "§aAuto Accept Requests"
+      lore-current-enabled: "§7Currently: §aEnabled"
+      lore-current-disabled: "§7Currently: §cDisabled"
+      lore-click: "§eClick to change"
+      chat-enabled: "§aAuto Accept enabled."
+      chat-disabled: "§aAuto Accept disabled."
+    auto-deny:
+      name: "§aAuto Deny Requests"
+      lore-current-enabled: "§7Currently: §aEnabled"
+      lore-current-disabled: "§7Currently: §cDisabled"
+      lore-click: "§eClick to change"
+      chat-enabled: "§aAuto Deny enabled."
+      chat-disabled: "§aAuto Deny disabled."
+
+economy:
+  vault-not-found: "Vault is not installed! Economy features will be disabled." # Sent to Console
+
+tpa:
+  not-enough-money: "§cNot enough money for TPA. TPA costs: {cost}" #{cost}
+  cannot-send: "§cYou cannot send TPA requests at this time."
+  target-not-accepting: "§cThat player is not accepting TPA requests."
+  cooldown: "§cYou must wait before sending another request."
+  crossworld-disabled: "§cCross-world TPA is disabled."
+  request-sent: "§aRequest sent to {player}." #{player}
+  auto-accept: "§e{player} wants to teleport you to them (Auto-Accepted)." #{player}
+  auto-deny: "§e{player} wants to teleport you to them (Auto-Denied)." #{player}
+  request-expired-sender: "§cYour TPA request to {player} expired."
+  request-expired-target: "§cTPA request from {player} expired."
+
+  request-message: "§e{player} wants to {type}." #{type},{player}
+  request-type-here: "teleport you to them"
+  request-type-toyou: "teleport to you"
+  button-accept: "§a[Accept]"
+  button-accept-hover: "§aClick to accept"
+  button-deny: "§c[Deny]"
+  button-deny-hover: "§cClick to deny"
+
+  warmup: "§eTeleporting in {seconds}s. Don't move or take damage." #{seconds}
+  warmup-cancelled: "§cTeleport cancelled (moved)."
+  teleported: "§aTeleported!"
+
+  player-not-found: "§cPlayer not found."
+  no-incoming: "§cNo incoming requests."
+  player-offline: "§cPlayer is offline."
+  accepted: "§aTPA accepted."
+  accepted-other: "§aYour TPA request was accepted."
+  denied: "§aTPA request denied."
+  denied-other: "§cYour TPA request was denied."
+  no-outgoing: "§cNo outgoing request."
+  cancelled: "§aCancelled your TPA requests."
+  cancelled-other: "§cTPA request from {player} was cancelled." #{player}
+  toggle-accepting: "§aYou are now accepting TPA requests."
+  toggle-blocking: "§aYou are now blocking TPA requests."

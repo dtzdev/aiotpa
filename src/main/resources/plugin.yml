@@ -1,0 +1,57 @@
+name: aiotpa
+version: '1.0-SNAPSHOT'
+main: dt.aiotpa.Aiotpa
+api-version: '1.21'
+prefix: aiotpa
+load: STARTUP
+authors: [ dt ]
+description: All-in-one TPA solution.
+softdepend:
+  - vault
+commands:
+  tpa:
+    description: Send a TPA request
+    usage: /tpa <player>
+    permission: aiotpa.tpa
+    aliases: [ "tpask", "teleportask" ]
+  tpahere:
+    description: Send a TPAHere request
+    usage: /tpahere <player>
+    permission: aiotpa.tpahere
+    aliases: [ "tph", "teleporthereto" ]
+  tpaccept:
+    usage: /tpaccept <player>
+    description: Accept a TPA request
+    permission: aiotpa.accept
+    aliases: [ "tpok", "tpyes" ]
+  tpadeny:
+    usage: /tpadeny <player>
+    permission: aiotpa.deny
+    description: Deny a TPA request
+    aliases: [ "tpno", "tpdeny" ]
+  tpcancel:
+    description: Cancel your outgoing TPA request
+    aliases: [ "tpc", "tpabort" ]
+  tpatoggle:
+    description: Toggle receiving TPA requests
+    aliases: [ "tpsettings", "tpconfig" ]
+  tpasettings:
+    description: Open TPA settings
+    permission: aiotpa.settings
+  tpalist:
+    description: Show TPA requests
+permissions:
+  aiotpa.tpa:
+    default: true
+  aiotpa.tpahere:
+    default: true
+  aiotpa.accept:
+    default: true
+  aiotpa.deny:
+    default: true
+  aiotpa.bypass.toggle:
+    default: op
+  aiotpa.bypass.timer:
+    default: op
+  aiotpa.settings:
+    default: true

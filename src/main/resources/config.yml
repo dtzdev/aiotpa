@@ -1,0 +1,66 @@
+# =========================
+# =        aiotpa        =
+# =  Config version 1.1  =
+# =========================
+
+# Language
+# Default: en_us | Options: en_us
+language: "en_us"
+
+# Enable Prefix
+# If true, the plugin will use a prefix defined below before messages.
+# Default: true | Options: true, false
+enable-prefix: true
+
+# prefix: Chat prefix of the plugin. Contains support for HEX Colors, Gradients and & Color Codes.
+# Send before messages. E.g. Prefix: You cannot tpa
+# Default: "&#108630ai&#54B682ot&#5AA27Bpa&#5AA27B: " | Options: Any valid text
+prefix: "&#108630ai&#54B682ot&#5AA27Bpa&#5AA27B: "
+
+tpa:
+  # Enabled
+  # Is the TPA feature enabled?
+  # Default: true | Options: true, false
+  enabled: true
+
+  # Warmup Seconds
+  # The number of seconds to wait before teleporting.
+  # Default: 5 | Options: Any positive number
+  warmup-seconds: 5
+
+  # Crossworld Teleport
+  # Can players teleport across worlds?
+  # Default: false | Options: true, false
+  crossworld-deny: false
+
+  # Economy (Hook: Vault)
+  # Is economy integration enabled? If true, players must pay to teleport.
+  economy:
+    # Enabled
+    # Is economy integration enabled?
+    # Default: true | Options: true, false
+    enabled: false
+    # TPA Cost
+    # The cost of sending a TPA request.
+    # Default: 100.0 | Options: Any positive number
+    cost: 100.0
+
+  # Messages for TPA
+  # Customize messages for TPA requests.
+  # More customization options are available in the language files.
+  messages:
+    enabled: true
+    countdown:
+      enabled: true
+      seconds: 5
+      text: "&aTeleporting in &c{seconds} &aseconds..."
+    title:
+      enabled: true
+      main: "&aTeleporting..."
+      subtitle: "&7Don't move!"
+      fadeIn: 10
+      stay: 40
+      fadeOut: 10
+    actionbar:
+      enabled: true
+      text: "&aTeleport successful!"
