@@ -25,7 +25,7 @@ It provides flexible teleportation options with cooldowns, economy integration, 
 ---
 
 ## 📦 Installation
-1. Build the source
+1. Build the source or download latest .jar file from [releases](https://github.com/dtzdev/aiotpa/releases/tag/main).
 2. Place the `.jar` file into your server’s `plugins` folder.
 3. Start the server to generate default configuration and language files.
 4. Edit `config.yml` and `lang/lang_en_us.yml` to your liking.

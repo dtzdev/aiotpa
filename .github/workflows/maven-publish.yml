@@ -35,9 +35,9 @@ jobs:
       - name: Rename JAR for Release Type
         run: |
           if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-            mv target/ChainedTogether-1.0-SNAPSHOT.jar target/ChainedTogether-RELEASE-${{ github.ref_name }}.jar
+            mv target/aiotpa-1.0-SNAPSHOT.jar target/aiotpa-RELEASE-${{ github.ref_name }}.jar
           else
-            mv target/ChainedTogether-1.0-SNAPSHOT.jar target/ChainedTogether-BETA.jar
+            mv target/aiotpa-1.0-SNAPSHOT.jar target/aiotpa-BETA.jar
           fi
 
       - name: Create or Update GitHub Release
