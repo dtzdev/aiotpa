@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -24,13 +23,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 public class TpSettingsCommand implements CommandExecutor, Listener {
-    private final TpaManager manager;
     private final PlayerSettingsManager settingsManager;
     private final Map<UUID, Long> clickCooldown = new HashMap<>();
     private final long changeCooldown = 1500;
 
     public TpSettingsCommand(TpaManager manager, PlayerSettingsManager settingsManager) {
-        this.manager = manager;
         this.settingsManager = settingsManager;
     }
 

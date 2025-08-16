@@ -42,7 +42,6 @@ public class LanguageManager {
         return languageConfig.getString(key, "Message not found for key: " + key);
     }
 
-
     public static void createDefaultLanguageFiles(JavaPlugin plugifn) {
         plugin = plugifn;
         File langFolder = new File(plugin.getDataFolder(), "lang");
