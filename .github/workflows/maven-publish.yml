@@ -1,34 +1,51 @@
-# This workflow will build a package using Maven and then publish it to GitHub Packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
-
-name: Maven Package
+name: Build and Publish to GitHub Releases
 
 on:
-  release:
-    types: [ created ]
+  push:
+    branches:
+      - main      # Publishes BETA on pushes to main
+    tags:
+      - 'v*'      # Publishes RELEASE on tagged pushes like v1.0, v2.0, etc.
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
+          distribution: 'temurin'
           java-version: '21'
-          distribution: 'oracle'
-          server-id: github
-          settings-path: ${{ github.workspace }}
 
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}-
 
-      - name: Publish to GitHub Packages
-        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+      - name: Build project
+        run: mvn clean package
+
+      - name: Rename JAR for Release Type
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+            mv target/ChainedTogether-1.0-SNAPSHOT.jar target/ChainedTogether-RELEASE-${{ github.ref_name }}.jar
+          else
+            mv target/ChainedTogether-1.0-SNAPSHOT.jar target/ChainedTogether-BETA.jar
+          fi
+
+      - name: Create or Update GitHub Release
+        uses: softprops/action-gh-release@v2.0.8
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: target/*.jar
+          draft: false
+          prerelease: ${{ github.ref != 'refs/tags/v*' }}
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
