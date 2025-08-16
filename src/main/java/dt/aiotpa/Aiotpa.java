@@ -7,7 +7,6 @@ import dt.aiotpa.Manager.PlayerSettingsManager;
 import dt.aiotpa.Manager.TpaManager;
 import dt.aiotpa.Model.TpaConfig;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Aiotpa extends JavaPlugin {
