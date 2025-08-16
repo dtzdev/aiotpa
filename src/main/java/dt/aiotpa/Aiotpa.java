@@ -54,6 +54,7 @@ public final class Aiotpa extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
     }
+
     public static Aiotpa getInstance() {
         return instance;
     }

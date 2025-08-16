@@ -8,8 +8,10 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
@@ -61,7 +63,13 @@ public class TpaManager {
             return;
         }
         if (!canReceive(to) && !from.hasPermission("aiotpa.bypass.toggle")) {
-            from.sendMessage(Utility.getPrefix() + LanguageManager.getMessage("tpa.target-not-accepting"));
+            if(from.hasPermission("aiotpa.bypass.toggle")) {
+                from.sendMessage(Utility.getPrefix() + LanguageManager.getMessage("tpa.bypass-toggle")
+                        .replace("{player}", to.getName()));
+            }
+            else {
+                from.sendMessage(Utility.getPrefix() + LanguageManager.getMessage("tpa.target-not-accepting"));
+            }
             return;
         }
         if (hasCooldown(from)) {
@@ -122,21 +130,50 @@ public class TpaManager {
     }
 
     private void warmupTeleport(Player teleporter, Player target, boolean here) {
-        teleporter.sendMessage(Utility.getPrefix() + LanguageManager.getMessage("tpa.warmup").replace("{seconds}", String.valueOf(cfg.warmupSeconds)));
+        Player affected = here ? target : teleporter;
 
-        final double startX = teleporter.getLocation().getX();
-        final double startY = teleporter.getLocation().getY();
-        final double startZ = teleporter.getLocation().getZ();
+        affected.sendMessage(
+                Utility.getPrefix() + LanguageManager.getMessage("tpa.warmup")
+                        .replace("{seconds}", String.valueOf(cfg.warmupSeconds))
+        );
+
+        final double startX = affected.getLocation().getX();
+        final double startY = affected.getLocation().getY();
+        final double startZ = affected.getLocation().getZ();
+
+        BukkitTask teleportTask = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            if (!teleporter.isOnline() || !target.isOnline()) return;
+
+            if (here) {
+                target.teleport(teleporter);
+            } else {
+                teleporter.teleport(target);
+            }
+
+            if (cfg.messagesEnabled) {
+                if (cfg.titleEnabled) {
+                    MessageManager.sendTitle(affected, cfg.titleMain, cfg.titleSub, cfg.fadeIn, cfg.stay, cfg.fadeOut);
+                }
+                if (cfg.actionbarEnabled) {
+                    MessageManager.sendActionbar(affected, cfg.actionbarText);
+                }
+            }
+
+            affected.sendMessage(Utility.getPrefix() + LanguageManager.getMessage("tpa.teleported"));
+        }, cfg.warmupSeconds * 20L);
 
         plugin.getServer().getScheduler().runTaskTimer(plugin, task -> {
-            if (!teleporter.isOnline()) {
+            if (!affected.isOnline()) {
                 task.cancel();
+                teleportTask.cancel();
                 return;
             }
-            double dist = teleporter.getLocation().distanceSquared(new org.bukkit.Location(
-                    teleporter.getWorld(), startX, startY, startZ));
-            if (dist > 0.2) {
-                teleporter.sendMessage(Utility.getPrefix() + LanguageManager.getMessage("tpa.warmup-cancelled"));
+            double dist = affected.getLocation().distanceSquared(new Location(
+                    affected.getWorld(), startX, startY, startZ));
+
+            if (dist > 0.25) {
+                affected.sendMessage(Utility.getPrefix() + LanguageManager.getMessage("tpa.warmup-cancelled"));
+                teleportTask.cancel();
                 task.cancel();
             }
         }, 0L, 2L);
@@ -145,28 +182,11 @@ public class TpaManager {
             for (int i = 0; i < cfg.countdownSeconds; i++) {
                 int timeLeft = cfg.countdownSeconds - i;
                 plugin.getServer().getScheduler().runTaskLater(plugin, () ->
-                                MessageManager.sendActionbar(teleporter,
+                                MessageManager.sendActionbar(affected,
                                         cfg.countdownText.replace("{seconds}", String.valueOf(timeLeft))),
                         i * 20L);
             }
         }
-
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-            if (here) {
-                target.teleport(teleporter);
-            } else {
-                teleporter.teleport(target);
-            }
-            if (cfg.messagesEnabled) {
-                if (cfg.titleEnabled) {
-                    MessageManager.sendTitle(teleporter, cfg.titleMain, cfg.titleSub, cfg.fadeIn, cfg.stay, cfg.fadeOut);
-                }
-                if (cfg.actionbarEnabled) {
-                    MessageManager.sendActionbar(teleporter, cfg.actionbarText);
-                }
-            }
-            teleporter.sendMessage(Utility.getPrefix() + LanguageManager.getMessage("tpa.teleported"));
-        }, cfg.warmupSeconds * 20L);
     }
 
     public void accept(Player p, String targetName) {

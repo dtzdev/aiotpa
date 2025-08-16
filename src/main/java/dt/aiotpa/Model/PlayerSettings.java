@@ -20,6 +20,7 @@ public class PlayerSettings {
 
     public void setAutoAccept(boolean autoAccept) {
         this.autoAccept = autoAccept;
+        if (autoAccept) this.autoDeny = false;
     }
 
     public boolean isAutoDeny() {
@@ -28,5 +29,6 @@ public class PlayerSettings {
 
     public void setAutoDeny(boolean autoDeny) {
         this.autoDeny = autoDeny;
+        if(autoDeny) this.autoAccept = false;
     }
 }

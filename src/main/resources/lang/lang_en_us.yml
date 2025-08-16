@@ -44,6 +44,7 @@ economy:
   vault-not-found: "Vault is not installed! Economy features will be disabled." # Sent to Console
 
 tpa:
+  bypass-toggle: "§cYou bypassed {player}'s TPA Toggle due to your permissions."
   not-enough-money: "§cNot enough money for TPA. TPA costs: {cost}" #{cost}
   cannot-send: "§cYou cannot send TPA requests at this time."
   target-not-accepting: "§cThat player is not accepting TPA requests."
