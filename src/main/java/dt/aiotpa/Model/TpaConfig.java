@@ -24,7 +24,7 @@ public class TpaConfig {
         // TPA configuration
         tpaEnabled = cfg.getBoolean("tpa.enabled", true);
         warmupSeconds =  cfg.getInt("tpa.warmup-seconds", 5);;
-        crossworldDeny = cfg.getBoolean("tpa.crossworld-deny", false); // NEW
+        crossworldDeny = cfg.getBoolean("tpa.crossworld-deny", false);
 
 
         // Messages configuration
